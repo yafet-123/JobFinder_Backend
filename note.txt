@@ -1,0 +1,59 @@
+
+model User{
+  user_id Int @id @default(autoincrement())
+  UserName String 
+  Password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  jobs Job[]
+  category Category[]
+  jobCategory JobCategory[]
+}
+
+model Job{
+  job_id Int @id @default(autoincrement())
+  CompanyName String
+  Image String
+  JobsType String
+  Location String
+  CareerLevel String
+  EmploymentType String
+  Salary String
+  JobsDescreption String?
+  JobsRequirement String?
+  DeadLine DateTime
+  Apply String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  createdBy User @relation(fields: [createdById], references: [user_id])
+  createdById Int 
+  category JobCategory[]
+}
+
+model Category{
+  category_id Int @id @default(autoincrement())
+  CategoryName String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  createdBy User @relation(fields: [createdById], references: [user_id])
+  createdById Int
+  jobs  JobCategory[]
+}
+
+model JobCategory{
+  createdBy User @relation(fields: [createdById], references: [user_id])
+  createdById Int
+  category Category @relation(fields: [categoryId], references: [category_id])
+  categoryId Int
+  job Job @relation(fields: [jobId], references: [job_id])
+  jobId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  @@id([createdById, categoryId, jobId])
+
+}
+
+psql --host=ec2-44-205-64-253.compute-1.amazonaws.com --port=5432 --username=mfxznnrpkuokbm --password --dbname=dcu3819ib6lgfh
+
+
+heroku pg:psql --app jobs-v11 < Adduser.sql
