@@ -35,5 +35,13 @@
   },
   "engines": {
     "node": "18.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yafet-123/JobFinder_Backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yafet-123/JobFinder_Backend/issues"
+  },
+  "homepage": "https://github.com/yafet-123/JobFinder_Backend#readme"
 }
