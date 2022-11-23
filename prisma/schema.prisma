@@ -12,9 +12,9 @@ datasource db {
 
 
 model Category {
-  category_id  String        @id @default(uuid())
+  category_id  Int        @id @default(autoincrement())
   CategoryName String        @db.VarChar(255)
-  user_id      String?
+  user_id      Int?
   CreatedDate  DateTime?     @default(now()) @db.Timestamptz(6)
   ModifiedDate DateTime?     @default(now()) @db.Timestamptz(6)
   User         User?         @relation(fields: [user_id], references: [user_id], onUpdate: NoAction)
@@ -22,7 +22,7 @@ model Category {
 }
 
 model Job {
-  job_id          String        @id @default(uuid())
+  job_id          Int        @id @default(autoincrement())
   CompanyName     String        @db.VarChar(255)
   Image           String?       @db.VarChar(255)
   JobsType        String        @db.VarChar(255)
@@ -36,14 +36,14 @@ model Job {
   Apply           String        @db.VarChar(255)
   CreatedDate     DateTime?     @default(now()) @db.Timestamptz(6)
   ModifiedDate    DateTime?     @default(now()) @db.Timestamptz(6)
-  user_id         String
+  user_id         Int
   User            User          @relation(fields: [user_id], references: [user_id], onDelete: SetNull, onUpdate: NoAction)
   Category     Category[]
 }
 
 
 model User {
-  user_id      String        @id @default(uuid())
+  user_id      Int        @id @default(autoincrement())
   UserName     String        @unique @db.VarChar(255)
   Password     String        @db.VarChar(255)
   CreatedDate  DateTime?     @default(now()) @db.Timestamptz(6)
