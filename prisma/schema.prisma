@@ -9,3 +9,45 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model Category {
+  category_id  String        @id @default(uuid())
+  CategoryName String        @db.VarChar(255)
+  user_id      String?
+  CreatedDate  DateTime?     @default(now()) @db.Timestamptz(6)
+  ModifiedDate DateTime?     @default(now()) @db.Timestamptz(6)
+  User         User?         @relation(fields: [user_id], references: [user_id], onUpdate: NoAction)
+  Job  Job[]
+}
+
+model Job {
+  job_id          String        @id @default(uuid())
+  CompanyName     String        @db.VarChar(255)
+  Image           String?       @db.VarChar(255)
+  JobsType        String        @db.VarChar(255)
+  Location        String        @db.VarChar(255)
+  CareerLevel     String        @db.VarChar(255)
+  EmploymentType  String        @db.VarChar(255)
+  Salary          String        @db.VarChar(255)
+  JobsDescreption String?
+  JobsRequirement String?
+  DeadLine        DateTime      @db.Date
+  Apply           String        @db.VarChar(255)
+  CreatedDate     DateTime?     @default(now()) @db.Timestamptz(6)
+  ModifiedDate    DateTime?     @default(now()) @db.Timestamptz(6)
+  user_id         String
+  User            User          @relation(fields: [user_id], references: [user_id], onDelete: SetNull, onUpdate: NoAction)
+  Category     Category[]
+}
+
+
+model User {
+  user_id      String        @id @default(uuid())
+  UserName     String        @unique @db.VarChar(255)
+  Password     String        @db.VarChar(255)
+  CreatedDate  DateTime?     @default(now()) @db.Timestamptz(6)
+  ModifiedDate DateTime?     @default(now()) @db.Timestamptz(6)
+  Category     Category[]
+  Job          Job[]
+}
