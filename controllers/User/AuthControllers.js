@@ -8,6 +8,9 @@ import { StatusCodes } from "http-status-codes";
 const login = async (req, res, next) => {
 	const { username, password } = req.body;
 
+	if (!username || !password) {
+    	throw new Error("Please provide all values");
+  	}
   	const user = await prisma.User.findUnique({
     	where: { 
     		UserName: username 
@@ -25,11 +28,15 @@ const login = async (req, res, next) => {
     	const isMatch = await bcrypt.compare(candidatePassword, user.Password);
     	return isMatch;
   	};
+
+  	
   	
   	const isPasswordCorrect = await comparePassword(password);
   	// it take the password from the user(first bcrypt it) and compare with incoming password
 
-  	
+  	if (!isPasswordCorrect) {
+    	throw new Error("Invalid Credentials");
+  	}
 
   	// if the paswors is incorrect please through error
   	const createJWT = jwt.sign(
@@ -42,7 +49,7 @@ const login = async (req, res, next) => {
   	const token = createJWT;
 
   	res.status(StatusCodes.OK).json({
-    	userId: user.id,
+    	userId: user.user_id,
     	user: user.UserName,
     	token
   	});
@@ -59,6 +66,7 @@ const forgotPassword = async (req, res) => {
     	},
   	});
   	res.json("Password Changed");
+  	// hashsync is for to make the password hash and save it the database
 };
 
 export { 
