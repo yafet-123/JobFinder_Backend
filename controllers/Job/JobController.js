@@ -73,6 +73,7 @@ const getIndividualjob = async(req,res)=>{
 }
 
 const createJob = async(req,res)=>{
+	// it get the file from req it is not from res.body
 	const { 
 		CompanyName,
 		JobsType,
@@ -99,7 +100,8 @@ const createJob = async(req,res)=>{
 			JobsRequirement,
 			DeadLine:moment(DeadLine).format(),
 			Apply,
-			user_id:Number(user_id)
+			user_id:Number(user_id),
+			Category: { set: [{ category_id: 3 }, { category_id: 5 }] },
 		},
 	});
 
@@ -154,7 +156,7 @@ const deleteJob = async(req,res)=>{
 
 const createJobCategory = async(req,res)=>{
 	const {user_id, category_id, job_id} = req.body
-	const jobcategory = await prisma.JobCategory.create({
+	const jobcategory = await prisma.Job.create({
 		data:{
 			user_id : Number(user_id),
 			category_id : Number(category_id),

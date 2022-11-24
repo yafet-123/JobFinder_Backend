@@ -18,7 +18,7 @@ model Category {
   CreatedDate  DateTime?     @default(now()) @db.Timestamptz(6)
   ModifiedDate DateTime?     @default(now()) @db.Timestamptz(6)
   User         User?         @relation(fields: [user_id], references: [user_id], onUpdate: NoAction)
-  Job  Job[]
+  Job          Job[]
 }
 
 model Job {
@@ -38,7 +38,7 @@ model Job {
   ModifiedDate    DateTime?     @default(now()) @db.Timestamptz(6)
   user_id         Int
   User            User          @relation(fields: [user_id], references: [user_id], onDelete: SetNull, onUpdate: NoAction)
-  Category     Category[]
+  Category        Category[]
 }
 
 
