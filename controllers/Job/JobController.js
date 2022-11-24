@@ -107,19 +107,6 @@ const createJob = async(req,res)=>{
 	res.json(Jobdata)
 }
 
-const createJobCategory = async(req,res)=>{
-	const {user_id, category_id, job_id} = req.body
-	const jobcategory = await prisma.JobCategory.create({
-		data:{
-			user_id : Number(user_id),
-			category_id : Number(category_id),
-			job_id : Number(job_id)
-		}
-	})
-
-	res.json(jobcategory)
-}
-
 const updateJob = async(req,res)=>{
 	const {id} = req.params
 	const { 
@@ -155,6 +142,51 @@ const updateJob = async(req,res)=>{
 	res.json(Jobdata)
 }
 
+const deleteJob = async(req,res)=>{
+	const {id} = req.params;
+	const data = await prisma.Job.delete({
+		where:{
+			job_id:Number(id)
+		},
+	});
+	res.json(data)
+}
+
+const createJobCategory = async(req,res)=>{
+	const {user_id, category_id, job_id} = req.body
+	const jobcategory = await prisma.JobCategory.create({
+		data:{
+			user_id : Number(user_id),
+			category_id : Number(category_id),
+			job_id : Number(job_id)
+		}
+	})
+
+	res.json(jobcategory)
+}
+
+const getAllJobCategocry = async(req,res)=>{
+	const data = await prisma.Job.findMany({
+		orderBy:{
+			user_id:"asc",
+		},
+		include:{
+			User:{
+				select:{
+					UserName:true,
+				},
+			},
+			Category:{
+				select:{
+					CategoryName:true,
+				},
+			}
+		},
+	});
+
+	res.json(data)
+}
+
 const updateJobCategory = async(req,res)=>{
 	const {id} = req.params
 	const {job_id, category_id} = req.body
@@ -169,51 +201,6 @@ const updateJobCategory = async(req,res)=>{
 	})
 
 	res.json(jobcategory)
-}
-
-const deleteJob = async(req,res)=>{
-	const {id} = req.params;
-	const data = await prisma.Job.delete({
-		where:{
-			job_id:Number(id)
-		},
-	});
-	res.json(data)
-}
-
-const getAllJobCategocry = async(req,res)=>{
-	const data = await prisma.JobCategory.findMany({
-		orderBy:{
-			user_id:"asc",
-		},
-		include:{
-			User:{
-				select:{
-					UserName:true,
-				},
-			},
-			Category:{
-				select:{
-					CategoryName:true,
-				},
-			},
-			Job:{
-				select:{
-					CompanyName:true,
-					JobsType:true,
-				},
-			},
-		},
-	});
-
-	const AllJobdata = data.map((data)=>({
-		user:data.User.UserName,
-		companyName:data.Job.CompanyName,
-		jobsType:data.Job.JobsType,
-		category:data.Category.CategoryName
-	}))
-	const reverse1 = AllJobdata.reverse();
-	res.json(reverse1)
 }
 
 export {
