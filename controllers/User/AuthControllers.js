@@ -29,9 +29,7 @@ const login = async (req, res, next) => {
   	const isPasswordCorrect = await comparePassword(password);
   	// it take the password from the user(first bcrypt it) and compare with incoming password
 
-  	if (!isPasswordCorrect) {
-    	throw new Error("Invalid Credentials");
-  	}
+  	
 
   	// if the paswors is incorrect please through error
   	const createJWT = jwt.sign(
@@ -44,7 +42,7 @@ const login = async (req, res, next) => {
   	const token = createJWT;
 
   	res.status(StatusCodes.OK).json({
-    	userId: user.user_id,
+    	userId: user.id,
     	user: user.UserName,
     	token
   	});

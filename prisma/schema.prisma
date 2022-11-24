@@ -43,7 +43,7 @@ model Job {
 
 
 model User {
-  user_id      Int        @id @default(autoincrement())
+  user_id      Int           @id @default(autoincrement())
   UserName     String        @unique @db.VarChar(255)
   Password     String        @db.VarChar(255)
   CreatedDate  DateTime?     @default(now()) @db.Timestamptz(6)

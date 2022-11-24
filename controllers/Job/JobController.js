@@ -184,6 +184,14 @@ const getAllJobCategocry = async(req,res)=>{
 		},
 	});
 
+	// const AllJobdata = data.map((data)=>({
+	// 	user:data.User.UserName,
+	// 	companyName:data.Job.CompanyName,
+	// 	jobsType:data.Job.JobsType,
+	// 	category:data.Category.CategoryName
+	// }))
+	// const reverse1 = AllJobdata.reverse();
+
 	res.json(data)
 }
 
