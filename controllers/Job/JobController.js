@@ -85,8 +85,10 @@ const createJob = async(req,res)=>{
 		JobsRequirement,
 		DeadLine,
 		Apply,
-		user_id
+		user_id,
+		category_id
 	} = req.body
+	console.log(category_id)
 	const Jobdata = await prisma.Job.create({
 		data:{
 			CompanyName,
@@ -101,12 +103,37 @@ const createJob = async(req,res)=>{
 			DeadLine:moment(DeadLine).format(),
 			Apply,
 			user_id:Number(user_id),
-			Category: { set: [{ category_id: 3 }, { category_id: 5 }] },
 		},
 	});
 
+	const jobcategorydata = await prisma.Job.update({
+		where:{job_id:Number(Jobdata.job_id)},
+		data:{
+			Category: { 
+				set: 
+					[
+						for (let j = 0; j < test.length; j++) {
+							{ category_id: 3 }, 
+						}
+					] 
+			},
+		},
+		include:{
+			User:{
+				select:{
+					UserName:true,
+				},
+			},
+			Category:{
+				select:{
+					CategoryName:true,
+				},
+			}
+		},
+	})
+
 	
-	res.json(Jobdata)
+	res.json(jobcategorydata)
 }
 
 const updateJob = async(req,res)=>{
@@ -154,64 +181,6 @@ const deleteJob = async(req,res)=>{
 	res.json(data)
 }
 
-const createJobCategory = async(req,res)=>{
-	const {user_id, category_id, job_id} = req.body
-	const jobcategory = await prisma.Job.create({
-		data:{
-			user_id : Number(user_id),
-			category_id : Number(category_id),
-			job_id : Number(job_id)
-		}
-	})
-
-	res.json(jobcategory)
-}
-
-const getAllJobCategocry = async(req,res)=>{
-	const data = await prisma.Job.findMany({
-		orderBy:{
-			user_id:"asc",
-		},
-		include:{
-			User:{
-				select:{
-					UserName:true,
-				},
-			},
-			Category:{
-				select:{
-					CategoryName:true,
-				},
-			}
-		},
-	});
-
-	// const AllJobdata = data.map((data)=>({
-	// 	user:data.User.UserName,
-	// 	companyName:data.Job.CompanyName,
-	// 	jobsType:data.Job.JobsType,
-	// 	category:data.Category.CategoryName
-	// }))
-	// const reverse1 = AllJobdata.reverse();
-
-	res.json(data)
-}
-
-const updateJobCategory = async(req,res)=>{
-	const {id} = req.params
-	const {job_id, category_id} = req.body
-	const jobcategory = await prisma.JobCategory.update({
-		where:{
-			job_id:Number(job_id),
-			category_id : Number(id)
-		},
-		data:{
-			category_id : Number(category_id),
-		}
-	})
-
-	res.json(jobcategory)
-}
 
 export {
 	getAllJob,
@@ -219,7 +188,4 @@ export {
 	createJob,
 	updateJob,
 	deleteJob,
-	getAllJobCategocry,
-	createJobCategory,
-	updateJobCategory
 }
