@@ -106,33 +106,32 @@ const createJob = async(req,res)=>{
 		},
 	});
 
-	const jobcategorydata = await prisma.Job.update({
-		where:{job_id:Number(Jobdata.job_id)},
-		data:{
-			Category: { 
-				set: 
-					[
-						for (let j = 0; j < test.length; j++) {
-							{ category_id: 3 }, 
-						}
-					] 
-			},
-		},
-		include:{
-			User:{
-				select:{
-					UserName:true,
+	for (let j = 0; j < test.length; j++) {
+		const jobcategorydata = await prisma.Job.update({
+			where:{job_id:Number(Jobdata.job_id)},
+			data:{
+				Category: { 
+					set: 
+						[
+							{ category_id: 3 },
+						] 
 				},
 			},
-			Category:{
-				select:{
-					CategoryName:true,
+			include:{
+				User:{
+					select:{
+						UserName:true,
+					},
 				},
-			}
-		},
-	})
+				Category:{
+					select:{
+						CategoryName:true,
+					},
+				}
+			},
+		})
+	}
 
-	
 	res.json(jobcategorydata)
 }
 
