@@ -47,10 +47,16 @@ const getIndividualjob = async(req,res)=>{
 		include:{
 			User:{
 				select:{
-					UserName:true
+					UserName:true,
 				},
 			},
+			Category:{
+				select:{
+					CategoryName:true,
+				},
+			}
 		},
+
 	});
 	const onedata = {
 		job_id:data.job_id,
@@ -66,9 +72,11 @@ const getIndividualjob = async(req,res)=>{
 		DeadLine:data.DeadLine,
 		Apply:data.Apply,
 		user:data.User.UserName,
+		CategoryName:data.Category.CategoryName,
 		CreatedDate:data.CreatedDate,
 		ModifiedDate:data.ModifiedDate
 	}
+	console.log(onedata)
 	res.json(onedata)
 }
 
@@ -114,22 +122,10 @@ const createJob = async(req,res)=>{
 				Category: { 
 					set: 
 						[
-							{ category_id: categoryId[j] },
+							{ category_id: Number(categoryId[j]) },
 						] 
 				},
-			},
-			include:{
-				User:{
-					select:{
-						UserName:true,
-					},
-				},
-				Category:{
-					select:{
-						CategoryName:true,
-					},
-				}
-			},
+			}
 		})
 	}
 
