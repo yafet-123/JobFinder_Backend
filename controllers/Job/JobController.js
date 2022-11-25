@@ -86,9 +86,9 @@ const createJob = async(req,res)=>{
 		DeadLine,
 		Apply,
 		user_id,
-		category_id
+		categoryId
 	} = req.body
-	console.log(category_id)
+	console.log(categoryId)
 	const Jobdata = await prisma.Job.create({
 		data:{
 			CompanyName,
@@ -106,14 +106,15 @@ const createJob = async(req,res)=>{
 		},
 	});
 
-	for (let j = 0; j < test.length; j++) {
+	for (let j = 0; j < categoryId.length; j++) {
+		console.log(j)
 		const jobcategorydata = await prisma.Job.update({
 			where:{job_id:Number(Jobdata.job_id)},
 			data:{
 				Category: { 
 					set: 
 						[
-							{ category_id: 3 },
+							{ category_id: categoryId[j] },
 						] 
 				},
 			},
@@ -132,7 +133,7 @@ const createJob = async(req,res)=>{
 		})
 	}
 
-	res.json(jobcategorydata)
+	res.json("done")
 }
 
 const updateJob = async(req,res)=>{
