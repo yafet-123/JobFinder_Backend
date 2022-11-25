@@ -42,7 +42,8 @@ const getIndividualjob = async(req,res)=>{
 	const {id} = req.params
 	const data = await prisma.Job.findUnique({
 		where:{
-			job_id: Number(id)
+			job_id: Number(id),
+
 		},
 		include:{
 			User:{
@@ -71,7 +72,7 @@ const getIndividualjob = async(req,res)=>{
 		JobsRequirement:data.JobsRequirement,
 		DeadLine:data.DeadLine,
 		Apply:data.Apply,
-		user:data.User.UserName,
+		// user:data.User.UserName,
 		CategoryName:data.Category.CategoryName,
 		CreatedDate:data.CreatedDate,
 		ModifiedDate:data.ModifiedDate
