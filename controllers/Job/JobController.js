@@ -51,7 +51,6 @@ const getIndividualjob = async(req,res)=>{
 					UserName:true,
 				},
 			},
-			Category:true
 		},
 
 	});
@@ -68,8 +67,7 @@ const getIndividualjob = async(req,res)=>{
 		JobsRequirement:data.JobsRequirement,
 		DeadLine:data.DeadLine,
 		Apply:data.Apply,
-		// user:data.User.UserName,
-		CategoryName:data.Category.CategoryName,
+		user:data.User.UserName,
 		CreatedDate:data.CreatedDate,
 		ModifiedDate:data.ModifiedDate
 	}
@@ -94,27 +92,6 @@ const createJob = async(req,res)=>{
 		categoryId
 	} = req.body
 	
-	const categoryIds = categoryId.map(str => {
-  		return Number(str);
-	});
-	
-	const createNewJob = {
-		CompanyName,
-		JobsType,
-		Location,
-		CareerLevel,
-		EmploymentType,
-		Salary,
-		JobsDescreption,
-		JobsRequirement,
-		DeadLine,
-		Apply,
-		user_id,
-		categoryId
-	}
-
-	
-
 	const Jobdata = await prisma.Job.create({
 		data:{
 			CompanyName,
@@ -128,13 +105,6 @@ const createJob = async(req,res)=>{
 			DeadLine,
 			Apply,
 			user_id:Number(user_id),
-			Category:{
-				update:{
-					category_id:{
-						in:categoryIds
-					}
-				}
-			}
 		}
 	});
 
@@ -154,7 +124,7 @@ const createJob = async(req,res)=>{
 	// 	})
 	// }
 
-	res.json("done")
+	res.json(Jobdata)
 }
 
 const updateJob = async(req,res)=>{
