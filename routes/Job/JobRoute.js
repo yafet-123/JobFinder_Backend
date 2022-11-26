@@ -6,6 +6,9 @@ import {
 	createJob,
 	updateJob,
 	deleteJob,
+	getAllJobCategocry,
+	createJobCategory,
+	updateJobCategory
 } from '../../controllers/Job/JobController.js'
 import { admin } from "../../middleware/auth.js";
 import multer from 'multer';
