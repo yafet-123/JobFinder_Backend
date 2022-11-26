@@ -51,11 +51,7 @@ const getIndividualjob = async(req,res)=>{
 					UserName:true,
 				},
 			},
-			Category:{
-				select:{
-					CategoryName:true,
-				},
-			}
+			Category:true
 		},
 
 	});
@@ -77,7 +73,7 @@ const getIndividualjob = async(req,res)=>{
 		CreatedDate:data.CreatedDate,
 		ModifiedDate:data.ModifiedDate
 	}
-	console.log(onedata)
+	console.log(data)
 	res.json(onedata)
 }
 
@@ -97,38 +93,47 @@ const createJob = async(req,res)=>{
 		user_id,
 		categoryId
 	} = req.body
-	console.log(categoryId)
+	
+	const category_id = categoryId.map(str => {
+  		return Number(str);
+	});
+	
+	const createNewJob = {
+		CompanyName,
+		JobsType,
+		Location,
+		CareerLevel,
+		EmploymentType,
+		Salary,
+		JobsDescreption,
+		JobsRequirement,
+		DeadLine,
+		Apply,
+		user_id,
+		categoryId
+	}
+
+	
+
 	const Jobdata = await prisma.Job.create({
-		data:{
-			CompanyName,
-			Image:req.file.path,
-			JobsType,
-			Location,
-			CareerLevel,
-			EmploymentType,
-			Salary,
-			JobsDescreption,
-			JobsRequirement,
-			DeadLine:moment(DeadLine).format(),
-			Apply,
-			user_id:Number(user_id),
-		},
+		data:createNewJob
 	});
 
-	for (let j = 0; j < categoryId.length; j++) {
-		console.log(j)
-		const jobcategorydata = await prisma.Job.update({
-			where:{job_id:Number(Jobdata.job_id)},
-			data:{
-				Category: { 
-					set: 
-						[
-							{ category_id: Number(categoryId[j]) },
-						] 
-				},
-			}
-		})
-	}
+	// for (let j = 0; j < categoryId.length; j++) {
+	// 	console.log(j)
+	// 	const jobcategorydata = await prisma.Job.update({
+	// 		where:{job_id:Number(Jobdata.job_id)},
+	// 		data:{
+
+	// 			Category: { 
+	// 				set: 
+	// 					[
+	// 						{ category_id: arrOfCategoryIdNumber },
+	// 					] 
+	// 			},
+	// 		}
+	// 	})
+	// }
 
 	res.json("done")
 }
