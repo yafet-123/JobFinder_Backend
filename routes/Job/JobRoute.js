@@ -17,6 +17,7 @@ const upload = multer({dest:"upload"})
 
 router.route("/").post(upload.single('file'),admin,createJob).get(getAllJob);
 router.route("/:id").delete(admin,deleteJob).patch(upload.single('file'),admin,updateJob).get(getIndividualjob);
-
+router.route("/category").post(admin,createJobCategory).get(getAllJobCategocry);
+router.route("/category/:id").patch(admin,updateJobCategory)
 
 export default router

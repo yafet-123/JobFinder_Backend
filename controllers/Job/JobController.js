@@ -172,6 +172,18 @@ const deleteJob = async(req,res)=>{
 	res.json(data)
 }
 
+const createJobCategory = async(req,res)=>{
+  const {user_id, category_id, job_id} = req.body
+  const jobcategory = await prisma.Job.create({
+    data:{
+      user_id : Number(user_id),
+      category_id : Number(category_id),
+      job_id : Number(job_id)
+    }
+  })
+
+  res.json(jobcategory)
+}
 
 export {
 	getAllJob,
