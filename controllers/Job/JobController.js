@@ -91,7 +91,15 @@ const createJob = async(req,res)=>{
 		user_id,
 		categoryId
 	} = req.body
-	
+	// for (let j = 0; j < categoryId.length; j++) {
+	// 	{ 
+	// 		JobCategory: { 
+	// 			user_id : Number(user_id),
+	// 	      	category_id : Number(category_id[j])
+		      	
+	// 	    }
+	// 	}
+  	// }
 	const Jobdata = await prisma.Job.create({
 		data:{
 			CompanyName,
@@ -105,6 +113,11 @@ const createJob = async(req,res)=>{
 			DeadLine,
 			Apply,
 			user_id:Number(user_id),
+			JobCategory:{
+				create: [
+
+				]
+			}
 		}
 	});
 
@@ -176,22 +189,51 @@ const createJobCategory = async(req,res)=>{
   	const {user_id, categoryId, job_id} = req.body
   	console.log(req.body)
   	for (let j = 0; j < categoryId.length; j++) {
-
-  	}
 	  	const jobcategory = await prisma.JobCategory.create({
 		    data:{
 		      user_id : Number(user_id),
-		      category_id : {
-		      	create:[
-		      		
-		      	]
-		      }
+		      category_id : Number(categoryId[j]),
 		      job_id : Number(job_id)
 		    }
 	  	})
+	}
 	
 
   res.json("done")
+}
+
+const getIndvidualJobCategocry = async(req,res)=>{
+	const {id} = req.params
+	const data = await prisma.JobCategory.findMany({
+		where:{
+			job_id: Number(id),
+
+		},
+		include:{
+	      User:{
+	        select:{
+	          UserName:true,
+	        },
+	      },
+	      Category:{
+	        select:{
+	          CategoryName:true,
+	        },
+	      },
+	      Job:{
+	        select:{
+	          CompanyName:true,
+	        },
+	      }
+    	},
+
+	});
+	console.log(data)
+	const oneData = data.map((data)=>({
+		JobsType : data.Job.CompanyName,
+	   category:data.Category.CategoryName
+  	}))
+	res.json(oneData)
 }
 
 const getAllJobCategocry = async(req,res)=>{
@@ -237,8 +279,7 @@ const updateJobCategory = async(req,res)=>{
   const {job_id, category_id} = req.body
   const jobcategory = await prisma.JobCategory.update({
     where:{
-      	job_id:Number(job_id),
-      	category_id : Number(id)
+      	job_category_id:Number(id)
     },
     data:{
       category_id : Number(category_id),
@@ -256,5 +297,6 @@ export {
 	deleteJob,
 	getAllJobCategocry,
 	createJobCategory,
-	updateJobCategory
+	updateJobCategory,
+	getIndvidualJobCategocry
 }
