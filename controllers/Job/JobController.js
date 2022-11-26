@@ -185,10 +185,60 @@ const createJobCategory = async(req,res)=>{
   res.json(jobcategory)
 }
 
+const getAllJobCategocry = async(req,res)=>{
+  const data = await prisma.Job.findMany({
+    orderBy:{
+      user_id:"asc",
+    },
+    include:{
+      User:{
+        select:{
+          UserName:true,
+        },
+      },
+      Category:{
+        select:{
+          CategoryName:true,
+        },
+      }
+    },
+  });
+
+  // const AllJobdata = data.map((data)=>({
+  //  user:data.User.UserName,
+  //  companyName:data.Job.CompanyName,
+  //  jobsType:data.Job.JobsType,
+  //  category:data.Category.CategoryName
+  // }))
+  // const reverse1 = AllJobdata.reverse();
+
+
+  res.json(data)
+}
+
+const updateJobCategory = async(req,res)=>{
+  const {id} = req.params
+  const {job_id, category_id} = req.body
+  const jobcategory = await prisma.JobCategory.update({
+    where:{
+      job_id:Number(job_id),
+      category_id : Number(id)
+    },
+    data:{
+      category_id : Number(category_id),
+    }
+  })
+
+  res.json(jobcategory)
+}
+
 export {
 	getAllJob,
 	getIndividualjob,
 	createJob,
 	updateJob,
 	deleteJob,
+	getAllJobCategocry,
+	createJobCategory,
+	updateJobCategory
 }
