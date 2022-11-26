@@ -94,7 +94,7 @@ const createJob = async(req,res)=>{
 		categoryId
 	} = req.body
 	
-	const category_id = categoryId.map(str => {
+	const categoryIds = categoryId.map(str => {
   		return Number(str);
 	});
 	
@@ -116,7 +116,26 @@ const createJob = async(req,res)=>{
 	
 
 	const Jobdata = await prisma.Job.create({
-		data:createNewJob
+		data:{
+			CompanyName,
+			JobsType,
+			Location,
+			CareerLevel,
+			EmploymentType,
+			Salary,
+			JobsDescreption,
+			JobsRequirement,
+			DeadLine,
+			Apply,
+			user_id:Number(user_id),
+			Category:{
+				update:{
+					category_id:{
+						in:categoryIds
+					}
+				}
+			}
+		}
 	});
 
 	// for (let j = 0; j < categoryId.length; j++) {

@@ -10,19 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Category {
-  category_id  Int        @id @default(autoincrement())
+  category_id  Int           @id @default(autoincrement())
   CategoryName String        @db.VarChar(255)
   user_id      Int?
   CreatedDate  DateTime?     @default(now()) @db.Timestamptz(6)
   ModifiedDate DateTime?     @default(now()) @db.Timestamptz(6)
   User         User?         @relation(fields: [user_id], references: [user_id], onUpdate: NoAction)
-  Job          Job[]
+  JobCategory  JobCategory[]
 }
 
 model Job {
-  job_id          Int        @id @default(autoincrement())
+  job_id          Int           @id @default(autoincrement())
   CompanyName     String        @db.VarChar(255)
   Image           String?       @db.VarChar(255)
   JobsType        String        @db.VarChar(255)
@@ -38,9 +37,8 @@ model Job {
   ModifiedDate    DateTime?     @default(now()) @db.Timestamptz(6)
   user_id         Int
   User            User          @relation(fields: [user_id], references: [user_id], onDelete: SetNull, onUpdate: NoAction)
-  Category        Category[]
+  JobCategory     JobCategory[]
 }
-
 
 model User {
   user_id      Int           @id @default(autoincrement())
@@ -49,5 +47,19 @@ model User {
   CreatedDate  DateTime?     @default(now()) @db.Timestamptz(6)
   ModifiedDate DateTime?     @default(now()) @db.Timestamptz(6)
   Category     Category[]
+  JobCategory  JobCategory[]
   Job          Job[]
+}
+
+model JobCategory {
+  user_id      Int?
+  category_id  Int
+  job_id       Int
+  CreatedDate  DateTime? @default(now()) @db.Timestamptz(6)
+  ModifiedDate DateTime? @default(now()) @db.Timestamptz(6)
+  Category     Category  @relation(fields: [category_id], references: [category_id], onDelete: Cascade, onUpdate: NoAction)
+  Job          Job       @relation(fields: [job_id], references: [job_id], onDelete: Cascade, onUpdate: NoAction)
+  User         User?     @relation(fields: [user_id], references: [user_id], onUpdate: NoAction)
+
+  @@id([category_id, job_id])
 }
