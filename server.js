@@ -7,9 +7,10 @@ dotenv.config();
 // Allows restricted resources on a web page to be requested from 
 // another domain outside the domain from which the first resource was served.
 import http from 'http'
+import bodyParser  from 'body-parser'
 import express from 'express'
 const app = express();
-
+app.use(bodyParser.urlencoded({ extended: true }));
 import "express-async-errors";
 // this command is needed because if it is not found we will have error in the 
 // code when we throw error like this thorw new Error("The error")

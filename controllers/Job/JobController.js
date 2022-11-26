@@ -173,20 +173,29 @@ const deleteJob = async(req,res)=>{
 }
 
 const createJobCategory = async(req,res)=>{
-  const {user_id, category_id, job_id} = req.body
-  const jobcategory = await prisma.Job.create({
-    data:{
-      user_id : Number(user_id),
-      category_id : Number(category_id),
-      job_id : Number(job_id)
-    }
-  })
+  	const {user_id, categoryId, job_id} = req.body
+  	console.log(req.body)
+  	for (let j = 0; j < categoryId.length; j++) {
 
-  res.json(jobcategory)
+  	}
+	  	const jobcategory = await prisma.JobCategory.create({
+		    data:{
+		      user_id : Number(user_id),
+		      category_id : {
+		      	create:[
+		      		
+		      	]
+		      }
+		      job_id : Number(job_id)
+		    }
+	  	})
+	
+
+  res.json("done")
 }
 
 const getAllJobCategocry = async(req,res)=>{
-  const data = await prisma.Job.findMany({
+  const data = await prisma.JobCategory.findMany({
     orderBy:{
       user_id:"asc",
     },
@@ -200,17 +209,24 @@ const getAllJobCategocry = async(req,res)=>{
         select:{
           CategoryName:true,
         },
+      },
+      Job:{
+        select:{
+          CompanyName:true,
+        },
       }
     },
   });
 
-  // const AllJobdata = data.map((data)=>({
-  //  user:data.User.UserName,
-  //  companyName:data.Job.CompanyName,
-  //  jobsType:data.Job.JobsType,
-  //  category:data.Category.CategoryName
-  // }))
-  // const reverse1 = AllJobdata.reverse();
+  console.log(data)
+
+  const AllJobdata = data.map((data)=>({
+   Creater:data.User.UserName,
+   companyName:data.Job.CompanyName,
+   jobsType:data.Job.JobsType,
+   category:data.Category.CategoryName
+  }))
+  const reverse1 = AllJobdata.reverse();
 
 
   res.json(data)
@@ -221,8 +237,8 @@ const updateJobCategory = async(req,res)=>{
   const {job_id, category_id} = req.body
   const jobcategory = await prisma.JobCategory.update({
     where:{
-      job_id:Number(job_id),
-      category_id : Number(id)
+      	job_id:Number(job_id),
+      	category_id : Number(id)
     },
     data:{
       category_id : Number(category_id),

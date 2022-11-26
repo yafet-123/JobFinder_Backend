@@ -19,8 +19,8 @@ const upload = multer({dest:"upload"})
 // upload folder will be created and when we send file it store the file there and it give it random name
 
 router.route("/").post(upload.single('file'),admin,createJob).get(getAllJob);
-router.route("/:id").delete(admin,deleteJob).patch(upload.single('file'),admin,updateJob).get(getIndividualjob);
 router.route("/category").post(admin,createJobCategory).get(getAllJobCategocry);
+router.route("/:id").delete(admin,deleteJob).patch(upload.single('file'),admin,updateJob).get(getIndividualjob);
 router.route("/category/:id").patch(admin,updateJobCategory)
 
 export default router

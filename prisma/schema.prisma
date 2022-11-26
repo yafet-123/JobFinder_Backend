@@ -52,6 +52,7 @@ model User {
 }
 
 model JobCategory {
+  job_category_id  Int       @id @default(autoincrement())
   user_id      Int?
   category_id  Int
   job_id       Int
@@ -61,5 +62,4 @@ model JobCategory {
   Job          Job       @relation(fields: [job_id], references: [job_id], onDelete: Cascade, onUpdate: NoAction)
   User         User?     @relation(fields: [user_id], references: [user_id], onUpdate: NoAction)
 
-  @@id([category_id, job_id])
 }
