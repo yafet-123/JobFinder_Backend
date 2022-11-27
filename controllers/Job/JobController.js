@@ -3,6 +3,7 @@ const prisma = new PrismaClient()
 import moment from "moment";
 
 
+// to get all the jobs
 const getAllJob = async(req,res)=>{
 	const data = await prisma.Job.findMany({
 		orderBy: {
