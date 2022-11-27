@@ -143,6 +143,7 @@ const createJob = async(req,res)=>{
 	res.json(Jobdata)
 }
 
+// to update the job
 const updateJob = async(req,res)=>{
 	const {id} = req.params
 	const { 
