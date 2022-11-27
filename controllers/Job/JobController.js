@@ -243,6 +243,7 @@ const getIndvidualJobCategocry = async(req,res)=>{
 	res.json(oneData)
 }
 
+// to get all the job and category
 const getAllJobCategocry = async(req,res)=>{
   const data = await prisma.JobCategory.findMany({
     orderBy:{
