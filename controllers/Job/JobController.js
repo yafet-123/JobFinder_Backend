@@ -208,6 +208,7 @@ const createJobCategory = async(req,res)=>{
   res.json("done")
 }
 
+// to get the indvidual the job and category relationship
 const getIndvidualJobCategocry = async(req,res)=>{
 	const {id} = req.params
 	const data = await prisma.JobCategory.findMany({
