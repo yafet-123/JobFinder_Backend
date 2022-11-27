@@ -179,6 +179,7 @@ const updateJob = async(req,res)=>{
 	res.json(Jobdata)
 }
 
+// to delete the job 
 const deleteJob = async(req,res)=>{
 	const {id} = req.params;
 	const data = await prisma.Job.delete({
