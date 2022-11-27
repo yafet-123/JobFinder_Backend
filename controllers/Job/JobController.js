@@ -190,6 +190,7 @@ const deleteJob = async(req,res)=>{
 	res.json(data)
 }
 
+// to create the job and category together
 const createJobCategory = async(req,res)=>{
   	const {user_id, categoryId, job_id} = req.body
   	console.log(req.body)
