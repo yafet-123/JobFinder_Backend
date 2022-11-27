@@ -39,6 +39,7 @@ const getAllJob = async(req,res)=>{
 	res.json(reverse)
 }
 
+// to get individual job 
 const getIndividualjob = async(req,res)=>{
 	const {id} = req.params
 	const data = await prisma.Job.findUnique({
@@ -76,6 +77,7 @@ const getIndividualjob = async(req,res)=>{
 	res.json(onedata)
 }
 
+// to create or post jobs
 const createJob = async(req,res)=>{
 	// it get the file from req it is not from res.body
 	const { 
