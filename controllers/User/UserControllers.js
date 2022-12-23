@@ -20,10 +20,11 @@ const getAllUser = async(req,res)=>{
 
 
 const register = async(req,res)=>{
-	const {UserName , Password} = req.body;
+	const {UserName , Password, email} = req.body;
 	const data = await prisma.User.create({
 		data:{
 			UserName,
+			email,
 			Password:bcrypt.hashSync(Password, 8)	
 		},
 	});

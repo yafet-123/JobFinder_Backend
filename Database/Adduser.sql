@@ -1,10 +1,10 @@
 INSERT INTO 
-    "User" ("UserName","Password")
+    "User" ("UserName","Password", "email")
 VALUES
-    ('yafet','1234567'),
-    ('biniyam','1234567'),
-    ('nati','1234567'),
-    ('dani','1234567')
+    ('yafet','1234567', 'yafetaddisu123@gmail.com'),
+    ('biniyam','1234567', 'abimarshall2022@gmail.com'),
+    ('nati','1234567', 'nati@gmail.com'),
+    ('dani','1234567','')
 RETURNING *;
 
 
@@ -14,7 +14,23 @@ VALUES
     ('hulu Media','Software developer','Addis abeba','0 year', 'Full time','10000', '2022-11-23 13:54:05.261739-08','go to bole', 2)
 RETURNING *;
 
-
+INSERT INTO 
+    "Location" ("LocationName","Image", "user_id")
+VALUES
+    ('Addis Ababa','/images/Addis AbabaFlag.jpg', 17),
+    ('Afar','/images/AfarFlag.jpg', 17),
+    ('Amhara','/images/AmharaFlag.jpg', 17),
+    ('Benishangul Gumuz','/images/Benishangul GumuzFlag.jpg',18),
+    ('Dire Dewa','/images/Dire DawaFlag.jpg',18),
+    ('Gambela','/images/GambelaFlag.jpg',18),
+    ('Harari','/images/HarariFllag.jpg',18),
+    ('Oromiya','/images/OromiaFlag.jpg',18),
+    ('Sidama','/images/SidemaFlag.jpg',19),
+    ('Somali','/images/SomaliFlag.jpg',19),
+    ('SNNPR','/images/SNNPRFlag.jpg',20),
+    ('Tigray','/images/TigrayFllag.jpg',20),
+    ('South West Ethopian Region','/images/South West Ethopian RegionFlag.jpg',20)
+RETURNING *;
 
 INSERT INTO 
     "ClinicList" ("ClinicName","Description","CreatedBy","IsActive")
