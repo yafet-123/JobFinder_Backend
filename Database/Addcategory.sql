@@ -45,12 +45,6 @@ VALUES
     ('Science and Technology',1)
 RETURNING *;
 
-INSERT INTO 
-    "Items" ("name","Description","price","Image","profile","Condition","user_id")
-VALUES
-    ('I phone ','128Gb storage 6 gb ram', '300000','{"https://res.cloudinary.com/df7hlpjcj/image/upload/v1690976469/Ecommerce/2ee00c23-3b7e-45e4-b3f5-483a8f55c718_hi6xi4.jpg"}','Image','Good condition',3),
-    ('Samsung','256Gb storage 8 Gb ram', '4000000','{"https://res.cloudinary.com/df7hlpjcj/image/upload/v1690976438/Ecommerce/24bb1ef2-53d7-44de-8db2-4606fa744fe1_mnb8pr.jpg"}','Image','New',4)
-RETURNING *;
 
 INSERT INTO 
     "User" ("UserName","phonenumber", "email","Image","Password")
