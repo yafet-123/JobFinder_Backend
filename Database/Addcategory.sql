@@ -59,37 +59,6 @@ VALUES
     ('biniyam','+251934781030', 'abimarshall6066@gmail.com','https://petapixel.com/assets/uploads/2022/08/fdfs11-800x533.jpg','12345')
 RETURNING *;
 
-INSERT INTO 
-    "Category" ("CategoryName","SuperCategory","user_id")
-VALUES
-    ('Any','None', 3),
-    ('Jewelry & Accessories','Shoes , clothes and accessories', 3),
-    ('Womens clothing & shoes','Shoes , clothes and accessories', 3),
-    ('Mens clothing & shoes','Shoes , clothes and accessories', 3),
-    ('Bags & Luggages','Shoes , clothes and accessories', 3),
-    ('Mobile phones & accessories','Electronics', 3),
-    ('Computers & Accessories','Electronics', 3),
-    ('camera & photos','Electronics', 3),
-    ('Home Electronics','Electronics', 3),
-    ('Office Electronics','Electronics', 3),
-    ('Car Electronics','Electronics', 3),
-    ('Video game console & Accessories','Electronics', 3),
-    ('security & surveillance','Electronics', 3),
-    ('portable Video & audio','Electronics', 3),
-    ('Bags & Luggages','Shoes , clothes and accessories', 3),
-    ('Skin Care','Health & Beauty', 3),
-    ('Hair care','Health & Beauty', 3),
-    ('Fragrance','Health & Beauty', 3),
-    ('nails , hands and foot care','Electronics', 3),
-    ('Kid cloth & shoes','Baby & kids', 3),
-    ('Strollers, car seats & accessories','Baby & kids', 3),
-    ('furniture','Home & kitchen', 3),
-    ('garden & outdoors','Home & kitchen', 3),
-    ('kitchenware','Home & kitchen', 3),
-    ('bedding','Home & kitchen', 3),
-    ('home decor','Home & kitchen', 3),
-    ('pet supplies','Home & kitchen', 3),
-    ('bath','Home & kitchen', 3)
-RETURNING *;
+
     
 
